@@ -31,6 +31,10 @@ void main(int argc, char **argv) {
     struct timeval tv;
     int val;
 
+    if (argc > 1) {
+	fileName = argv[1];
+    }
+
     if ((fd = open(deviceName, O_RDWR)) < 0) {	// Open port for reading and writing
 	printf("Failed to open i2c port\n");
 	exit(1);
@@ -81,7 +85,8 @@ void main(int argc, char **argv) {
 	    gbuffer = g_strerror(errno);
 	    printf(gbuffer);
 	    printf("\n");
-	    exit(5);
+	    write(fd, buf, 4);
+//	    exit(5);
 	}
 
 	printf("Timer = %u - X = %u - Y = %u - Laser = %u\n", ++timer, x, y, laser);
